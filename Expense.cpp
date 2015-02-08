@@ -2,12 +2,20 @@
 #include "Expense.h"
 #include "Individual.h"
 
-Expense::AddNewExpense(Real amount, std::map<Individual, Real>& percentageSplit)
+void Expense::AddNewExpense(Real amount, std::map<Individual, Real>& percentageSplit)
 {
 
 }
 
-Expense::AddNewExpenseSplitEqually(Real amount, std::vector<Individual>& individualList)
+void Expense::AddNewExpenseSplitEqually(Real amount, std::vector<Individual>& individualList)
 {
+	Real individualCount = (Real) individualList.size();
+	std::map<Individual, Real> individualShareMap;
 
+	for (auto& individual : individualList)
+	{
+		individualShareMap.insert(IndividualSharePair(individual, amount/individualCount));
+	}
+
+	ExpenseManager::RegisterNewExpense();
 }
