@@ -2,24 +2,24 @@
 
 using namespace std;
 
-UInt IdMgr::instanceCount = 0;
+uint32_t IdMgr::instanceCount = 0;
 
 Id::Id()
 {
 	_Id = __IdInvalid;
-	_IdMgrPtr = NULL;
+	_IdMgrPtr.reset();
 }
 
-Id::Id(SHARED_PTR<IdMgr> IdMgrPtr)
+Id::Id(shared_ptr<IdMgr> IdMgrPtr)
 {
 	_IdMgrPtr = IdMgrPtr;
-	if (_IdMgrPtr)
-		_Id = _IdMgrPtr->_nextId++;
+	if (_IdMgrPtr.lock())
+		_Id = _IdMgrPtr.lock()->_nextId++;
 	else
 		_Id = __IdInvalid;
 }
 
-Id::Id(SHARED_PTR<IdMgr> IdMgrPtr, IdType id)
+Id::Id(shared_ptr<IdMgr> IdMgrPtr, IdType id)
 {
 	_IdMgrPtr = IdMgrPtr;
 	_Id = id;
@@ -27,8 +27,8 @@ Id::Id(SHARED_PTR<IdMgr> IdMgrPtr, IdType id)
 
 Id::~Id()
 {
-	if (_IdMgrPtr && _IdMgrPtr->reuseIds)
-		_IdMgrPtr->ReclaimId(Get());
+	if (_IdMgrPtr.lock() && _IdMgrPtr.lock()->_reuseIds)
+		_IdMgrPtr.lock()->ReclaimId(Get());
 }
 
 IdType Id::Get()
@@ -36,10 +36,11 @@ IdType Id::Get()
 	return _Id;
 }
 
-IdMgr::IdMgr()
+IdMgr::IdMgr(bool reuseIds)
 {
-	_currentMaxIdAllotted = __IdStart;
-	_freeIdList = vector<Id>();
+	_reuseIds = reuseIds;
+	_nextId = __IdStart;
+	_freeIdList = list<IdType>();
 }
 
 IdMgr::~IdMgr()
@@ -47,9 +48,9 @@ IdMgr::~IdMgr()
 
 }
 
-SHARED_PTR<IdMgr> IdMgr::GetNewInstance(bool reuseIds)
+shared_ptr<IdMgr> IdMgr::GetNewInstance(bool reuseIds)
 {
-	SHARED_PTR<IdMgr> sIdMgrPtr = make_shared<IdMgr>(new IdMgr(reuseIds));
+	shared_ptr<IdMgr> sIdMgrPtr = make_shared<IdMgr>(new IdMgr(reuseIds));
 	instanceCount++;
 	return sIdMgrPtr;
 }
@@ -58,12 +59,12 @@ Id IdMgr::GetNextId()
 {
 	if (!_freeIdList.empty())
 	{
-		Id IdFromFreeList = _freeIdList.front();
+		IdType IdFromFreeList = _freeIdList.front();
 		_freeIdList.pop_front();		
-		return IdFromFreeList;
+		return Id(shared_from_this(), IdFromFreeList);
 	}
 
-	return make_shared<Id>(Id(shared_from_this()));
+	return Id(shared_from_this());
 }
 
 void IdMgr::ReclaimId(IdType freeId)

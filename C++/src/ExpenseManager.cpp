@@ -1,6 +1,16 @@
 #include "ExpenseManager.h"
 
-void ExpenseManager::RegisterNewExpense(SHARED_PTR<Expense>& expense)
+ExpenseManager::ExpenseManager()
+{
+
+}
+
+ExpenseManager::~ExpenseManager()
+{
+
+}
+
+void ExpenseManager::RegisterNewExpense(const shared_ptr<Expense>& expense)
 {
 	_expenseList.push_back(expense);
 }

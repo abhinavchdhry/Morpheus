@@ -1,22 +1,23 @@
-#include "Types.h"
+#include "CommonIncludes.h"
 #include "Expense.h"
 #include "Individual.h"
+#include "ExpenseManager.h"
 
-void Expense::AddNewExpense(Real amount, std::map<Individual, Real>& percentageSplit)
+void Expense::AddNewExpense(double amount, std::map<Individual, double>& percentageSplit)
 {
 
 }
 
-void Expense::AddNewExpenseSplitEqually(Real amount, std::vector<Individual>& individualList)
+void Expense::AddNewExpenseSplitEqually(double amount, std::vector<Individual>& individualList)
 {
-	Real individualCount = (Real) individualList.size();
-	std::map<Individual, Real> individualShareMap;
+	double individualCount = (double) individualList.size();
+	std::map<Individual, double> individualShareMap;
 
 	for (auto& individual : individualList)
 	{
 		individualShareMap.insert(IndividualSharePair(individual, amount/individualCount));
 	}
 
-	SHARED_PTR<Expense> newExpense = make_shared(Expense(amount, individualShareMap));
+	shared_ptr<Expense> newExpense = make_shared(Expense(amount, individualShareMap));
 	ExpenseManager::RegisterNewExpense(newExpense);
 }

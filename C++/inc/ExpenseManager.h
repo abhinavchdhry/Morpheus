@@ -1,13 +1,16 @@
-#include "Types.h"
+#include "CommonIncludes.h"
 #include "Expense.h"
-#include <memory>
 
 class ExpenseManager {
 
 public:
-	UNIQUE_PTR<ExpenseManager> GetInstance();
-	static void RegisterNewExpense(SHARED_PTR<Expense>& expense);
+
+	ExpenseManager();
+	~ExpenseManager();
+
+	unique_ptr<ExpenseManager> GetInstance();
+	static void RegisterNewExpense(const shared_ptr<Expense>& expense);
 
 private:
-	std::vector<SHARED_PTR<Expense>> _expenseList;
+	vector<shared_ptr<Expense>> _expenseList;
 };
