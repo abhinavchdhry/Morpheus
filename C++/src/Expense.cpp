@@ -15,9 +15,9 @@ void Expense::AddNewExpenseSplitEqually(double amount, std::vector<Individual>& 
 
 	for (auto& individual : individualList)
 	{
-		individualShareMap.insert(IndividualSharePair(individual, amount/individualCount));
+//		individualShareMap.insert(IndividualSharePair(individual, amount/individualCount));
 	}
 
-	shared_ptr<Expense> newExpense = make_shared(Expense(amount, individualShareMap));
-	ExpenseManager::RegisterNewExpense(newExpense);
+//	shared_ptr<Expense> newExpense(amount, individualShareMap);
+//	ExpenseManager::RegisterNewExpense(newExpense);
 }

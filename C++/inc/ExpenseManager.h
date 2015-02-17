@@ -1,3 +1,6 @@
+#ifndef _ExpenseManager_h_
+#define _ExpenseManager_h_
+
 #include "CommonIncludes.h"
 #include "Expense.h"
 
@@ -9,8 +12,10 @@ public:
 	~ExpenseManager();
 
 	unique_ptr<ExpenseManager> GetInstance();
-	static void RegisterNewExpense(const shared_ptr<Expense>& expense);
+	void RegisterNewExpense(const shared_ptr<Expense>& expense);
 
 private:
 	vector<shared_ptr<Expense>> _expenseList;
 };
+
+#endif /* _ExpenseManager_h_ */

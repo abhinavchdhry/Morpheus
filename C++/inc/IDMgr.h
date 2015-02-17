@@ -1,3 +1,6 @@
+#ifndef _IdMgr_h_
+#define _IDMgr_h_
+
 #include "CommonIncludes.h"
 
 using namespace std;
@@ -43,3 +46,5 @@ private:
 	IdType 		 _nextId;
 	list<IdType> _freeIdList;
 };
+
+#endif /* _IdMgr_h_ */
