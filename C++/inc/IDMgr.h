@@ -17,9 +17,9 @@ class IdMgr;
 
 class Id {
 public:
-	Id::Id();
+	Id();
 	Id(shared_ptr<IdMgr> IdMgrPtr);
-	Id::Id(shared_ptr<IdMgr> IdMgrPtr, IdType id);
+	Id(shared_ptr<IdMgr> IdMgrPtr, IdType id);
 	~Id();
 
 	virtual IdType Get();
