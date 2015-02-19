@@ -2,7 +2,8 @@
 A simplistic implementation of a group expense splitting algorithm.
 Modularized for C++ and Python
 
-ARCHITECTURE:
+### ARCHITECTURE:
+
 1. Library will be written in C++ and compiled as a shared object.
 2. PHP(for web-based interface), iOS and Android-NDK wrappers on top of the C++ library
 
@@ -14,10 +15,10 @@ ARCHITECTURE:
 
 ## C++ Development Wiki:
 
-### 1. Directory structure
+#### 1. Directory structure
 - *libraries/* holds a set of generic modules that provide a specific functionality and can be used by other modules
 - *inc/* and *src/* hold the core application code headers and source respectively
 - *build/* is dynamically generated during build time and contains generated object files, debug info and final binary
 - *unittests/* holds a complete set of test cases for isolated testing of modules and libraries
 
-### 2. Feature development guidelines
+#### 2. Feature development guidelines
