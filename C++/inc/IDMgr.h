@@ -16,12 +16,16 @@ enum {
 class IdMgr;
 
 class Id {
-public:
+	friend class IdMgr;
+	/* All constructors for Id are private to prevent
+	 * Ids being created without an IdMgr
+	 */
 	Id();
 	Id(shared_ptr<IdMgr> IdMgrPtr);
 	Id(shared_ptr<IdMgr> IdMgrPtr, IdType id);
-	~Id();
 
+public:
+	~Id();
 	virtual IdType Get();
 
 private:
@@ -29,19 +33,24 @@ private:
 	weak_ptr<IdMgr> _IdMgrPtr;
 };
 
+typedef shared_ptr<Id> IdPtr;
+
 class IdMgr : public enable_shared_from_this<IdMgr> {
 	friend class Id;
+
 public:
-	static uint32_t instanceCount;
 	static shared_ptr<IdMgr> GetNewInstance(bool reuseIds=false);
-
-	virtual Id GetNextId();
-	virtual void ReclaimId(IdType id);
-
-	IdMgr(bool reuseIds=false);
+	virtual IdPtr GetNextId();
 	~IdMgr();
 
 private:
+	IdMgr(bool reuseIds=false);
+	virtual void ReclaimId(IdType id);
+
+private:
+	/* No. of instances of IDMgr created */
+	static uint32_t instanceCount;
+
 	bool		 _reuseIds;
 	IdType 		 _nextId;
 	list<IdType> _freeIdList;

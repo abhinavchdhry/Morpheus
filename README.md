@@ -16,9 +16,9 @@ Modularized for C++ and Python
 ## C++ Development Wiki:
 
 #### 1. Directory structure
-- *libraries/* holds a set of generic modules that provide a specific functionality and can be used by other modules
-- *inc/* and *src/* hold the core application code headers and source respectively
-- *build/* is dynamically generated during build time and contains generated object files, debug info and final binary
-- *unittests/* holds a complete set of test cases for isolated testing of modules and libraries
+- **libraries/** holds a set of generic modules that provide a specific functionality and can be used by other modules
+- **inc/** and **src/** hold the core application code headers and source respectively
+- **build/** is dynamically generated during build time and contains generated object files, debug info and final binary
+- **unittests/** holds a complete set of test cases for isolated testing of modules and libraries
 
 #### 2. Feature development guidelines

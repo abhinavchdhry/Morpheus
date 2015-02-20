@@ -2,11 +2,9 @@ BUILDDIR := build
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix $(BUILDDIR)/,$(notdir $(CPP_FILES:.cpp=.o)))
 CC := g++
-CFLAGS := -g --std=c++0x -Iinc 
+INCLUDES := \inc \libraries
+CFLAGS := -g --std=c++0x -I$(INCLUDES) 
 
-#ToDo Need a main.cpp in root folder to test the library
-#ToDo @Aman Change linker directory specified by -L to something more comprehensive than '.'
-#Currently making it '.'
 all: main.cpp $(BUILDDIR)/libmorpheus.a
 	$(CC) $(CFLAGS) main.cpp -L $(BUILDDIR)/ -l morpheus -o $(BUILDDIR)/morpheus
 
