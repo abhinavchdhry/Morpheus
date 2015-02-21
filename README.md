@@ -13,6 +13,8 @@ Modularized for C++ and Python
 3. make or make all will generate the library and binary.
 4. Just run make clean to remove the generated obj files.
 
+Item tracker: https://docs.google.com/spreadsheets/d/10kIPQuIvKSMO0itamC9i90E7OnY75qUJwDmDCkcR04U/edit?usp=sharing
+
 ## C++ Development Wiki:
 
 #### 1. Directory structure
